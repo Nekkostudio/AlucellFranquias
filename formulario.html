@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  @font-face { font-family:'Nexa'; src:url('uploads/NexaTextRegular.otf') format('opentype'); font-weight:400; font-display:swap; }
+  @font-face { font-family:'Nexa'; src:url('uploads/NexaTextRegular.otf') format('opentype'); font-weight:700; font-display:swap; }
+  html, body { margin:0; padding:0; background:#000; }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  a { color:#FFD200; text-decoration:none; }
+  a:hover { color:#fff; }
+  input, select, textarea { font-family:'Montserrat', sans-serif; }
+  @keyframes pulseGlow { 0%,100% { opacity:.45; transform:scale(1); } 50% { opacity:.9; transform:scale(1.12); } }
+  @keyframes beam { 0% { transform:translateY(-30%) rotate(8deg); opacity:.15 } 50% { opacity:.5 } 100% { transform:translateY(30%) rotate(8deg); opacity:.15 } }
+</style>
+</helmet>
+
+<div style="background:#000; min-height:100vh; display:flex; justify-content:center; font-family:'Montserrat',sans-serif; color:#fff; overflow-x:hidden;">
+  <div style="position:fixed; top:0; left:0; right:0; height:100vh; pointer-events:none; z-index:0; overflow:hidden;">
+    <div style="position:absolute; top:-10%; left:-30%; width:70%; height:60%; background:radial-gradient(circle, rgba(255,210,0,.20), transparent 65%); filter:blur(40px); animation:pulseGlow 9s ease-in-out infinite;"></div>
+    <div style="position:absolute; bottom:5%; right:-25%; width:65%; height:45%; background:radial-gradient(circle, rgba(255,210,0,.12), transparent 65%); filter:blur(50px); animation:pulseGlow 13s ease-in-out infinite 2s;"></div>
+    <div style="position:absolute; top:0; left:20%; width:2px; height:120%; background:linear-gradient(180deg, transparent, rgba(255,210,0,.5), transparent); filter:blur(1.5px); animation:beam 11s ease-in-out infinite;"></div>
+    <div style="position:absolute; top:0; right:28%; width:1px; height:120%; background:linear-gradient(180deg, transparent, rgba(255,255,255,.35), transparent); filter:blur(1px); animation:beam 16s ease-in-out infinite 3s;"></div>
+  </div>
+
+<div style="width:100%; max-width:{{ maxW }}; position:relative; z-index:1;">
+
+  <header style="display:flex; align-items:center; justify-content:space-between; gap:16px; padding:{{ headPad }};">
+    <a href="index.html" style="display:block;"><img src="assets/logo.svg" alt="ALUCELL Franquias" style="height:52px;" /></a>
+    <a href="index.html" style="font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.5);">Voltar</a>
+  </header>
+
+  <section style="padding:{{ heroPad }};">
+    <h1 style="font-family:'Nexa','Outfit',sans-serif; font-weight:800; font-size:{{ h1Size }}; line-height:1.05; letter-spacing:-0.025em; margin:0 0 16px; text-wrap:balance;">
+      Ficha de <span style="color:#FFD200;">qualificação</span>
+    </h1>
+    <p style="margin:0; font-size:{{ leadSize }}; line-height:1.6; color:rgba(255,255,255,.62); max-width:560px;">
+      O preenchimento é o primeiro passo do processo seletivo. Todas as informações passam por pré-análise da franqueadora.
+    </p>
+  </section>
+
+  <section style="padding:{{ secPad }}; display:flex; flex-direction:column; gap:{{ blocoGap }};">
+    <sc-for list="{{ blocos }}" as="b" hint-placeholder-count="3">
+      <div style="position:relative; overflow:hidden; border-radius:26px; padding:{{ cardPad }}; background:linear-gradient(165deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.11); backdrop-filter:blur(14px); box-shadow:0 24px 60px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.14);">
+        <div style="display:flex; align-items:baseline; gap:12px; margin-bottom:24px;">
+          <span style="font-family:'Nexa','Outfit',sans-serif; font-weight:700; font-size:13px; color:#FFD200;">{{ b.n }}</span>
+          <h2 style="font-family:'Nexa','Outfit',sans-serif; font-weight:700; font-size:{{ h2Size }}; line-height:1.15; letter-spacing:-0.02em; margin:0;">{{ b.titulo }}</h2>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:24px;">
+          <sc-for list="{{ b.perguntas }}" as="q" hint-placeholder-count="3">
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <div style="display:flex; align-items:baseline; gap:8px; flex-wrap:wrap;">
+                <span style="font-size:14px; font-weight:600; line-height:1.45; color:rgba(255,255,255,.92);">{{ q.label }}</span>
+                <span style="font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:{{ q.marcaCor }};">{{ q.marca }}</span>
+              </div>
+              <sc-if value="{{ q.temNota }}" hint-placeholder-val="{{ false }}">
+                <div style="font-size:12.5px; line-height:1.55; color:rgba(255,255,255,.45); padding-left:12px; border-left:1px solid rgba(255,210,0,.35);">{{ q.nota }}</div>
+              </sc-if>
+              <sc-if value="{{ q.isTexto }}" hint-placeholder-val="{{ true }}">
+                <input type="{{ q.inputType }}" value="{{ q.valor }}" onChange="{{ q.onChange }}" placeholder="{{ q.placeholder }}" style="width:100%; padding:15px 16px; border-radius:13px; border:1px solid rgba(255,255,255,.14); background:rgba(0,0,0,.5); color:#fff; font-size:15px; outline:none;" style-focus="border-color:rgba(255,210,0,.6)" />
+              </sc-if>
+              <sc-if value="{{ q.isArea }}" hint-placeholder-val="{{ false }}">
+                <textarea rows="3" value="{{ q.valor }}" onChange="{{ q.onChange }}" placeholder="{{ q.placeholder }}" style="width:100%; padding:15px 16px; border-radius:13px; border:1px solid rgba(255,255,255,.14); background:rgba(0,0,0,.5); color:#fff; font-size:15px; outline:none; resize:vertical;" style-focus="border-color:rgba(255,210,0,.6)"></textarea>
+              </sc-if>
+              <sc-if value="{{ q.isOpcoes }}" hint-placeholder-val="{{ false }}">
+                <div style="display:grid; grid-template-columns:{{ q.cols }}; gap:8px;">
+                  <sc-for list="{{ q.opcoes }}" as="o" hint-placeholder-count="4">
+                    <div onClick="{{ o.onPick }}" style="display:flex; align-items:center; gap:10px; padding:14px 15px; border-radius:13px; cursor:pointer; font-size:13.5px; line-height:1.35; background:{{ o.bg }}; color:{{ o.fg }}; border:1px solid {{ o.bd }};">
+                      <span style="flex:none; width:15px; height:15px; border-radius:{{ o.raio }}; border:1px solid {{ o.pontoBd }}; background:{{ o.ponto }};"></span>
+                      {{ o.label }}
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+
+    <div style="position:relative; overflow:hidden; border-radius:26px; padding:{{ cardPad }}; background:linear-gradient(165deg, rgba(255,210,0,.10), rgba(255,255,255,.02)); border:1px solid rgba(255,210,0,.22); backdrop-filter:blur(14px); box-shadow:0 24px 60px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.14);">
+      <div style="display:flex; align-items:baseline; gap:12px; margin-bottom:24px;">
+        <span style="font-family:'Nexa','Outfit',sans-serif; font-weight:700; font-size:13px; color:#FFD200;">07</span>
+        <h2 style="font-family:'Nexa','Outfit',sans-serif; font-weight:700; font-size:{{ h2Size }}; line-height:1.15; letter-spacing:-0.02em; margin:0;">Consentimentos obrigatórios</h2>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        <sc-for list="{{ consentimentos }}" as="c" hint-placeholder-count="3">
+          <div onClick="{{ c.onToggle }}" style="display:flex; flex-direction:column; gap:12px; padding:18px; border-radius:16px; background:rgba(0,0,0,.45); border:1px solid {{ c.bd }}; cursor:pointer;">
+            <div style="font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.5);">{{ c.titulo }}</div>
+            <div style="font-size:12.5px; line-height:1.6; color:rgba(255,255,255,.62);">{{ c.texto }}</div>
+            <div style="display:flex; align-items:flex-start; gap:11px; padding-top:4px;">
+              <span style="flex:none; width:21px; height:21px; border-radius:6px; display:flex; align-items:center; justify-content:center; background:{{ c.caixaBg }}; border:1px solid {{ c.bd }}; color:#000; font-size:13px; font-weight:700;">{{ c.marca }}</span>
+              <span style="font-size:13px; font-weight:600; line-height:1.4; color:{{ c.rotuloCor }};">{{ c.rotulo }}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div>
+      <div onClick="{{ enviar }}" style="display:flex; align-items:center; justify-content:center; width:100%; max-width:{{ ctaMax }}; padding:20px 24px; border-radius:16px; cursor:pointer; text-align:center; background:{{ botaoBg }}; color:{{ botaoFg }}; font-family:'Nexa','Outfit',sans-serif; font-weight:700; font-size:16px; box-shadow:{{ botaoSombra }};">{{ botaoTexto }}</div>
+      <div style="margin-top:14px; font-size:11.5px; line-height:1.6; color:rgba(255,255,255,.35); max-width:560px;">O envio desta ficha não constitui oferta, reserva de território nem aprovação de candidatura. A oferta ocorre exclusivamente mediante entrega da Circular de Oferta de Franquia (COF), nos termos da Lei nº 13.966/2019.</div>
+    </div>
+  </section>
+
+  <footer style="margin-top:52px; padding:{{ footPad }}; position:relative;"><div style="position:absolute; top:0; left:50%; transform:translateX(-50%); width:100vw; height:100%; border-top:1px solid rgba(255,255,255,.08); background:linear-gradient(180deg, rgba(255,210,0,.04), transparent); pointer-events:none;"></div><div style="position:relative;">
+      <img src="assets/logo.svg" alt="ALUCELL Franquias" style="height:44px; opacity:.9; margin-bottom:20px;" />
+      <div style="display:grid; grid-template-columns:{{ footCols }}; gap:14px; font-size:12.5px; line-height:1.5; color:rgba(255,255,255,.45);">
+        <div><span style="color: rgba(255, 255, 255, 0.75);">ALUCELL&nbsp;</span><br />CNPJ 52.959.757/0001-00</div>
+        <div>Centro, Campo Grande/MS — 79000-000</div>
+        <div>franquias@alucell.com.br · (67) 3023-4002</div>
+      </div>
+      <div style="margin-top:24px; padding-top:18px; border-top:1px solid rgba(255,255,255,.07); font-size:11px; line-height:1.55; color:rgba(255,255,255,.3);">
+        As informações desta página têm caráter institucional e não constituem oferta de franquia. A oferta ocorre exclusivamente mediante entrega da Circular de Oferta de Franquia (COF), nos termos da Lei nº 13.966/2019.
+      </div>
+      </div>
+    </footer>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:440,&quot;height&quot;:900}}">
+const BLOCOS = [
+  { n: "01", titulo: "Dados do interessado", perguntas: [
+    { id:"nome", tipo:"texto", label:"Nome completo", obrig:true, ph:"Seu nome completo" },
+    { id:"whats", tipo:"texto", inputType:"tel", label:"WhatsApp com DDD", obrig:true, ph:"(67) 90000-0000" },
+    { id:"email", tipo:"texto", inputType:"email", label:"E-mail", obrig:true, ph:"nome@email.com" },
+    { id:"reside", tipo:"texto", label:"Cidade/UF onde reside", obrig:true, ph:"Cidade / UF" },
+    { id:"interesse", tipo:"texto", label:"Cidade/UF de interesse para operar a unidade ALUCELL", obrig:true, ph:"Cidade / UF" },
+    { id:"vinculo", tipo:"radio", label:"Você reside ou atua comercialmente nessa cidade?", opcoes:[
+      "Sim, resido na cidade.", "Sim, atuo comercialmente na cidade.",
+      "Sim, resido e atuo comercialmente na cidade.", "Não, mas tenho interesse estratégico na cidade."] }
+  ]},
+  { n: "02", titulo: "Perfil do candidato", perguntas: [
+    { id:"atuacao", tipo:"radio", label:"Você pretende atuar diretamente na operação da unidade?", opcoes:[
+      "Sim, pretendo atuar diretamente.", "Sim, mas com apoio de equipe.",
+      "Não, pretendo indicar um operador responsável.", "Ainda não defini."] },
+    { id:"empresa", tipo:"radio", label:"Você já possui empresa ou experiência empresarial?", opcoes:[
+      "Sim, já possuo empresa ativa.", "Sim, já tive empresa anteriormente.",
+      "Não possuo empresa, mas tenho experiência em gestão.", "Não possuo experiência empresarial relevante."] },
+    { id:"exp", tipo:"chips", label:"Qual sua principal experiência profissional?", cols:2, opcoes:[
+      "Comércio","Serviços","Vendas","Gestão de equipe","Atendimento ao público","Financeiro/cobrança","Tecnologia","Investimentos","Outro"] },
+    { id:"local", tipo:"radio", label:"Você possui relacionamento comercial ou presença local relevante na cidade de interesse?", cols:3, opcoes:["Sim","Não","Parcialmente"] },
+    { id:"localDesc", tipo:"area", label:"Se sim, explique brevemente.", ph:"Descreva brevemente" }
+  ]},
+  { n: "03", titulo: "Capacidade de investimento", perguntas: [
+    { id:"capital", tipo:"radio", label:"Qual faixa de capital você possui disponível para investimento inicial e operação?", opcoes:[
+      "Até R$ 50 mil","De R$ 50 mil a R$ 100 mil","De R$ 100 mil a R$ 200 mil","De R$ 200 mil a R$ 400 mil",
+      "De R$ 400 mil a R$ 600 mil","De R$ 600 mil a R$ 800 mil","Acima de R$ 800 mil"] },
+    { id:"recursos", tipo:"radio", label:"Os recursos são próprios?", opcoes:[
+      "Sim, 100% próprios.","Parcialmente próprios.","Pretendo ter sócio.",
+      "Pretendo buscar crédito/financiamento.","Ainda estou avaliando."] },
+    { id:"capitalOp", tipo:"radio", cols:2, label:"Você compreende que a franquia exige capital operacional para compra de smartphones, formação de carteira e operação local?",
+      nota:"O capital operacional pode ser exigido e comprovado antes da aprovação e do início da operação.",
+      opcoes:["Sim","Ainda preciso entender melhor"] }
+  ]},
+  { n: "04", titulo: "Cidade e modalidade", perguntas: [
+    { id:"porte", tipo:"radio", cols:2, label:"Qual o porte aproximado da cidade de interesse?", opcoes:[
+      "4 mil a 6 mil habitantes","6 mil a 10 mil habitantes","10 mil a 20 mil habitantes","20 mil a 40 mil habitantes",
+      "40 mil a 80 mil habitantes","80 mil a 160 mil habitantes","160 mil a 400 mil habitantes","Acima de 400 mil habitantes","Não sei informar"] },
+    { id:"ponto", tipo:"radio", label:"Você já possui ponto comercial ou local em vista?", opcoes:[
+      "Sim","Não","Ainda estou avaliando","Pretendo operar inicialmente com estrutura enxuta, se permitido"] },
+    { id:"cidadeInt", tipo:"texto", label:"Cidade de interesse:", obrig:true, ph:"Cidade / UF" },
+    { id:"cidadeAlt", tipo:"texto", label:"Há outra cidade de interesse?", opcional:true, ph:"Opcional" }
+  ]},
+  { n: "05", titulo: "Modelo de interesse", perguntas: [
+    { id:"modelo", tipo:"radio", cols:2, label:"Qual modelo você gostaria de conhecer melhor?",
+      nota:"O Programa Performance Assistida é opcional, envolve acompanhamento intensivo, auditoria homologada e possibilidade de recompra condicionada, quando cabível. Não constitui garantia automática de faturamento, lucro, rentabilidade, payback ou sucesso comercial.",
+      opcoes:["Modelo ALUCELL Padrão","Modelo ALUCELL Performance Assistida","Quero entender os dois modelos","Ainda não sei"] }
+  ]},
+  { n: "06", titulo: "Motivação e aderência", perguntas: [
+    { id:"motivo", tipo:"area", label:"Por que você tem interesse em operar uma unidade ALUCELL?", ph:"Escreva livremente" },
+    { id:"risco", tipo:"radio", obrig:true, label:"Você entende que franquia é uma atividade empresarial com riscos e que não há garantia de lucro, faturamento, payback ou retorno de investimento?",
+      opcoes:["Sim, estou ciente.","Quero entender melhor os riscos antes de avançar."] },
+    { id:"disponibilidade", tipo:"radio", cols:3, label:"Você tem disponibilidade para participar de reuniões, treinamentos e seguir os padrões operacionais da franqueadora?",
+      opcoes:["Sim","Parcialmente","Ainda preciso avaliar"] }
+  ]}
+];
+
+const CONSENT = [
+  { id:"lgpd", titulo:"Consentimento LGPD",
+    texto:"Autorizo a ALUCELL Franquias LTDA. a tratar meus dados pessoais para fins de análise de perfil, contato comercial, avaliação de candidatura, disponibilidade territorial, envio de informações institucionais e continuidade do processo seletivo de franqueados, nos termos da legislação aplicável de proteção de dados.",
+    rotulo:"Li e autorizo o tratamento dos meus dados para as finalidades acima." },
+  { id:"preanalise", titulo:"Ciência sobre pré-análise",
+    texto:"Declaro estar ciente de que o preenchimento deste formulário não garante aprovação, reserva de território, envio automático da COF, concessão de franquia ou autorização para uso da marca ALUCELL.",
+    rotulo:"Estou ciente." },
+  { id:"resultado", titulo:"Ciência sobre ausência de promessa de resultado",
+    texto:"Declaro estar ciente de que a ALUCELL Franquias não promete faturamento, lucro, rentabilidade, payback, retorno de investimento, volume de contratos ou sucesso comercial.",
+    rotulo:"Estou ciente." }
+];
+
+class Component extends DCLogic {
+  state = { campos: {}, escolhas: {}, chips: {}, consent: {}, enviado: false, vw: typeof window !== "undefined" ? window.innerWidth : 440 };
+
+  componentDidMount() {
+    this._onResize = () => this.setState({ vw: window.innerWidth });
+    window.addEventListener("resize", this._onResize);
+    this._onResize();
+  }
+  componentWillUnmount() { window.removeEventListener("resize", this._onResize); }
+
+  layout() {
+    const vw = this.state.vw, lg = vw >= 900, md = vw >= 700;
+    return {
+      lg,
+      maxW: lg ? "1200px" : (md ? "720px" : "440px"),
+      headPad: lg ? "30px 40px 8px" : (md ? "26px 32px 8px" : "20px 22px 8px"),
+      heroPad: lg ? "34px 40px 24px" : "30px 22px 22px",
+      secPad: lg ? "10px 40px 20px" : "6px 22px 20px",
+      footPad: lg ? "48px 40px 60px" : (md ? "40px 32px 52px" : "34px 22px 46px"),
+      h1Size: lg ? "54px" : (md ? "44px" : "36px"),
+      h2Size: lg ? "26px" : "22px",
+      leadSize: lg ? "17px" : "15px",
+      cardPad: lg ? "34px 32px" : "26px 20px",
+      blocoGap: lg ? "20px" : "16px",
+      ctaMax: lg ? "380px" : "100%",
+      footCols: md ? "repeat(3, 1fr)" : "1fr"
+    };
+  }
+
+  renderVals() {
+    const L = this.layout();
+    const cols1 = "1fr";
+
+    const blocos = BLOCOS.map(b => ({
+      n: b.n, titulo: b.titulo,
+      perguntas: b.perguntas.map(q => {
+        const escolhido = this.state.escolhas[q.id];
+        const marcados = this.state.chips[q.id] || {};
+        const opcoes = (q.opcoes || []).map(label => {
+          const on = q.tipo === "chips" ? !!marcados[label] : escolhido === label;
+          return {
+            label,
+            raio: q.tipo === "chips" ? "5px" : "50%",
+            bg: on ? "rgba(255,210,0,.14)" : "rgba(0,0,0,.42)",
+            fg: on ? "#FFD200" : "rgba(255,255,255,.72)",
+            bd: on ? "rgba(255,210,0,.55)" : "rgba(255,255,255,.12)",
+            ponto: on ? "#FFD200" : "transparent",
+            pontoBd: on ? "#FFD200" : "rgba(255,255,255,.28)",
+            onPick: () => {
+              if (q.tipo === "chips") {
+                this.setState(s => ({ chips: { ...s.chips, [q.id]: { ...(s.chips[q.id] || {}), [label]: !(s.chips[q.id] || {})[label] } } }));
+              } else {
+                this.setState(s => ({ escolhas: { ...s.escolhas, [q.id]: label } }));
+              }
+            }
+          };
+        });
+        return {
+          label: q.label,
+          marca: q.obrig ? "Obrigatório" : (q.opcional ? "Opcional" : ""),
+          marcaCor: q.obrig ? "rgba(255,210,0,.7)" : "rgba(255,255,255,.3)",
+          nota: q.nota || "",
+          temNota: !!q.nota,
+          isTexto: q.tipo === "texto",
+          isArea: q.tipo === "area",
+          isOpcoes: q.tipo === "radio" || q.tipo === "chips",
+          inputType: q.inputType || "text",
+          placeholder: q.ph || "",
+          valor: this.state.campos[q.id] || "",
+          onChange: e => { const v = e.target.value; this.setState(s => ({ campos: { ...s.campos, [q.id]: v } })); },
+          cols: L.lg && q.cols ? "repeat(" + q.cols + ", 1fr)" : cols1,
+          opcoes
+        };
+      })
+    }));
+
+    const todos = CONSENT.every(c => this.state.consent[c.id]);
+    const consentimentos = CONSENT.map(c => {
+      const on = !!this.state.consent[c.id];
+      return {
+        titulo: c.titulo, texto: c.texto, rotulo: c.rotulo,
+        marca: on ? "✓" : "",
+        caixaBg: on ? "#FFD200" : "transparent",
+        bd: on ? "rgba(255,210,0,.6)" : "rgba(255,255,255,.14)",
+        rotuloCor: on ? "#FFD200" : "rgba(255,255,255,.8)",
+        onToggle: () => this.setState(s => ({ consent: { ...s.consent, [c.id]: !s.consent[c.id] } }))
+      };
+    });
+
+    return {
+      ...L,
+      blocos,
+      consentimentos,
+      enviar: () => { if (todos) this.setState({ enviado: true }); },
+      botaoTexto: this.state.enviado ? "Ficha enviada" : "Enviar ficha de qualificação",
+      botaoBg: todos ? "#FFD200" : "rgba(255,255,255,.07)",
+      botaoFg: todos ? "#000" : "rgba(255,255,255,.35)",
+      botaoSombra: todos ? "inset 0 1px 0 rgba(255,255,255,.35)" : "none"
+    };
+  }
+}
+</script>
+</body>
+</html>
