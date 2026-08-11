@@ -42,13 +42,13 @@
     <div style="display:grid; grid-template-columns:{{ heroCols }}; gap:{{ heroGap }}; align-items:center; padding:{{ heroWrapPad }}; position:relative;">
       <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute; top:0; left:50%; transform:translateX(-50%); width:100vw; height:calc(100% + 60px); overflow:hidden; pointer-events:none; z-index:0;">
-          <video ref="{{ videoRef }}" src="uploads/back dektop.mp4" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="width:100%; height:100%; object-fit:cover; opacity:.4;"></video>
+          <video ref="{{ videoRef }}" src="uploads/Entrando_na_loja_devagar_202608111630.mp4" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="width:100%; height:100%; object-fit:cover; opacity:.4;"></video>
           <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.35) 45%, #000);"></div>
         </div>
       </sc-if>
       <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
         <div style="position:absolute; top:0; left:50%; transform:translateX(-50%); width:100vw; height:calc(100% + 60px); overflow:hidden; pointer-events:none; z-index:0;">
-          <video ref="{{ videoRefM }}" src="uploads/Entrando_na_loja_devagar_202608101756.mp4" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="width:100%; height:100%; object-fit:cover; opacity:.4;"></video>
+          <video ref="{{ videoRefM }}" src="uploads/Entrando_na_loja_devagar_202608111622.mp4" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="width:100%; height:100%; object-fit:cover; opacity:.4;"></video>
           <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.35) 45%, #000);"></div>
         </div>
       </sc-if>
@@ -228,6 +228,13 @@ class Component extends DCLogic {
 
   componentDidMount() {
     this.componentDidUpdate();
+    const mudo = () => document.querySelectorAll("video").forEach(v => {
+      v.muted = true; v.defaultMuted = true; v.volume = 0;
+      if (v.paused) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+    });
+    mudo();
+    this._mudoTimer = setInterval(mudo, 400);
+    ["play", "playing", "volumechange", "loadeddata"].forEach(ev => document.addEventListener(ev, mudo, true));
     this._onResize = () => this.setState({ vw: window.innerWidth });
     window.addEventListener("resize", this._onResize);
     this._onResize();
@@ -288,7 +295,10 @@ class Component extends DCLogic {
     });
     return { msPath, pinos };
   }
-  componentWillUnmount() { window.removeEventListener("resize", this._onResize); }
+  componentWillUnmount() {
+    window.removeEventListener("resize", this._onResize);
+    clearInterval(this._mudoTimer);
+  }
 
   layout() {
     const vw = this.state.vw;
@@ -315,6 +325,7 @@ class Component extends DCLogic {
       footCols: md ? "repeat(3, 1fr)" : "1fr",
       videoRef: this.videoRef,
       showMapa: lg,
+      lg,
       statGap: lg ? "8px" : "6px",
       statWrap: "nowrap",
       statsGap: lg ? "30px" : "14px 24px",
