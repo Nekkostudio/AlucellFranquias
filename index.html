@@ -3,63 +3,29 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Alucell Franquias | Franquia de celulares no Mato Grosso do Sul</title>
-<meta name="description" content="Seja um franqueado Alucell e tenha exclusividade na sua cidade. Modelo testado há mais de 2 anos em Campo Grande/MS. Uma franquia por município. Atua em 79 cidades de Mato Grosso do Sul.">
-<meta name="keywords" content="franquia Alucell, franquia de celulares, franquia Mato Grosso do Sul, franquia Campo Grande MS, franquia exclusiva por cidade, franquia celular MS, oportunidade de franquia MS, Alucell franquias">
-<meta name="robots" content="index, follow">
-<meta name="author" content="Alucell Franquias">
-<link rel="canonical" href="https://alucellfranquias.vercel.app/">
-
-<!-- Open Graph -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://alucellfranquias.vercel.app/">
-<meta property="og:title" content="Alucell Franquias | Franquia de celulares no Mato Grosso do Sul">
-<meta property="og:description" content="Seja um franqueado Alucell e tenha exclusividade na sua cidade. Modelo testado há mais de 2 anos em Campo Grande/MS. Uma franquia por município em 79 cidades do MS.">
-<meta property="og:image" content="https://alucellfranquias.vercel.app/assets/logo.svg">
-<meta property="og:locale" content="pt_BR">
-<meta property="og:site_name" content="Alucell Franquias">
-
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Alucell Franquias | Franquia de celulares no Mato Grosso do Sul">
-<meta name="twitter:description" content="Seja um franqueado Alucell e tenha exclusividade na sua cidade. Modelo testado há mais de 2 anos em Campo Grande/MS.">
-<meta name="twitter:image" content="https://alucellfranquias.vercel.app/assets/logo.svg">
-
-<!-- Schema.org -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Alucell Franquias",
-  "description": "Franquia de celulares com exclusividade por município. Modelo validado há mais de 2 anos em Campo Grande/MS, presente em 79 cidades de Mato Grosso do Sul.",
-  "url": "https://alucellfranquias.vercel.app/",
-  "logo": "https://alucellfranquias.vercel.app/assets/logo.svg",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Campo Grande",
-    "addressRegion": "MS",
-    "addressCountry": "BR"
-  },
-  "areaServed": [
-    {"@type": "State", "name": "Mato Grosso do Sul"},
-    {"@type": "City", "name": "Campo Grande"}
-  ],
-  "numberOfEmployees": {"@type": "QuantitativeValue", "minValue": 1},
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "Oportunidade de Franquia",
-    "itemListElement": [
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Franquia exclusiva por município"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Franquia de celulares em Mato Grosso do Sul"}}
-    ]
-  }
-}
-</script>
 <script src="./support.js"></script>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1557753881931224');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1557753881931224&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
 <x-dc>
 <helmet>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;family=Outfit:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
 <style>
@@ -222,7 +188,7 @@
       <img src="assets/logo.svg" alt="ALUCELL Franquias" style="height:44px; opacity:.9; margin-bottom:20px;">
       <div style="display:grid; grid-template-columns:{{ footCols }}; gap:14px; font-size:12.5px; line-height:1.5; color:rgba(255,255,255,.45);">
         <div><span style="color: rgba(255, 255, 255, 0.75);">ALUCELL&nbsp;</span><br>CNPJ 68.111.017/0001-50</div>
-        <div>Centro, Campo Grande/MS — 79000-000</div>
+        <div>Centro, Campo Grande/MS — 79002-330</div>
         <div>franquias@alucell.com.br · (67) 9 9345-3316</div>
       </div>
       <div style="margin-top:24px; padding-top:18px; border-top:1px solid rgba(255,255,255,.07); font-size:11px; line-height:1.55; color:rgba(255,255,255,.3);">
@@ -441,7 +407,7 @@ class Component extends DCLogic {
       cienciaMarca: ok ? "✓" : "",
       cienciaBg: ok ? "#FFD200" : "transparent",
       cienciaBorda: ok ? "rgba(255,210,0,.6)" : "rgba(255,255,255,.16)",
-      enviar: () => { if (ok) this.setState({ enviado: true }); },
+      enviar: () => { if (ok) { this.setState({ enviado: true }); if (typeof fbq !== 'undefined') { fbq('track', 'Lead'); } } },
       botaoTexto: this.state.enviado ? "Ficha enviada" : "Enviar ficha de qualificação",
       botaoBg: ok ? "#FFD200" : "rgba(255,255,255,.07)",
       botaoFg: ok ? "#000" : "rgba(255,255,255,.35)",
