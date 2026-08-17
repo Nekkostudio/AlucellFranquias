@@ -339,7 +339,11 @@ class Component extends DCLogic {
         })
           .then(r => r.json())
           .then(data => {
-            if (data.success) this.setState({ abriu: true, erro: false, enviando: false });
+            if (data.success) {
+              this.setState({ abriu: true, erro: false, enviando: false });
+              window.dataLayer = window.dataLayer || [];
+              window.dataLayer.push({ 'event': 'lead_gerado' });
+            }
             else this.setState({ enviando: false, erro: true });
           })
           .catch(() => this.setState({ enviando: false, erro: true }));
