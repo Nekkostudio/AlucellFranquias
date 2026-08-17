@@ -8,6 +8,7 @@
 <body>
 <x-dc>
 <helmet>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 <style>
@@ -109,6 +110,16 @@
 
     <div>
       <div onClick="{{ enviar }}" style="display:flex; align-items:center; justify-content:center; width:100%; max-width:{{ ctaMax }}; padding:20px 24px; border-radius:16px; cursor:pointer; text-align:center; background:{{ botaoBg }}; color:{{ botaoFg }}; font-family:'Nexa','Outfit',sans-serif; font-weight:700; font-size:16px; box-shadow:{{ botaoSombra }};">{{ botaoTexto }}</div>
+      <sc-if value="{{ abriu }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:14px; padding:16px 18px; border-radius:14px; background:rgba(255,210,0,.10); border:1px solid rgba(255,210,0,.35); font-size:13px; line-height:1.6; color:#FFD200; max-width:560px;">
+          Ficha enviada com sucesso! Em breve nossa equipe entrará em contato.
+        </div>
+      </sc-if>
+      <sc-if value="{{ erro }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:14px; padding:16px 18px; border-radius:14px; background:rgba(255,80,80,.10); border:1px solid rgba(255,80,80,.35); font-size:13px; line-height:1.6; color:#ff8080; max-width:560px;">
+          Não foi possível enviar a ficha agora. Tente novamente ou envie os dados para franquias@alucell.com.br.
+        </div>
+      </sc-if>
       <div style="margin-top:14px; font-size:11.5px; line-height:1.6; color:rgba(255,255,255,.35); max-width:560px;">O envio desta ficha não constitui oferta, reserva de território nem aprovação de candidatura. A oferta ocorre exclusivamente mediante entrega da Circular de Oferta de Franquia (COF), nos termos da Lei nº 13.966/2019.</div>
     </div>
   </section>
@@ -117,7 +128,7 @@
       <img src="assets/logo.svg" alt="ALUCELL Franquias" style="height:44px; opacity:.9; margin-bottom:20px;" />
       <div style="display:grid; grid-template-columns:{{ footCols }}; gap:14px; font-size:12.5px; line-height:1.5; color:rgba(255,255,255,.45);">
         <div><span style="color: rgba(255, 255, 255, 0.75);">ALUCELL&nbsp;</span><br />CNPJ 68.111.017/0001-50</div>
-        <div>Centro, Campo Grande/MS — 79000-000</div>
+        <div>Centro, Campo Grande/MS — 79002-330</div>
         <div>franquias@alucell.com.br · (67) 9 9345-3316</div>
       </div>
       <div style="margin-top:24px; padding-top:18px; border-top:1px solid rgba(255,255,255,.07); font-size:11px; line-height:1.55; color:rgba(255,255,255,.3);">
@@ -132,74 +143,74 @@
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:440,&quot;height&quot;:900}}">
 const BLOCOS = [
   { n: "01", titulo: "Dados do interessado", perguntas: [
-    { id:"nome", tipo:"texto", label:"Nome completo", obrig:true, ph:"Seu nome completo" },
-    { id:"whats", tipo:"texto", inputType:"tel", label:"WhatsApp com DDD", obrig:true, ph:"(67) 90000-0000" },
-    { id:"email", tipo:"texto", inputType:"email", label:"E-mail", obrig:true, ph:"nome@email.com" },
-    { id:"interesse", tipo:"texto", label:"Cidade/UF de interesse para operar a unidade ALUCELL", obrig:true, ph:"Cidade / UF" },
-    { id:"vinculo", tipo:"radio", label:"Você reside ou atua comercialmente nessa cidade?", opcoes:[
+    { id:"nome", curto:"Nome", tipo:"texto", label:"Nome completo", obrig:true, ph:"Seu nome completo" },
+    { id:"whats", curto:"WhatsApp", tipo:"texto", inputType:"tel", label:"WhatsApp com DDD", obrig:true, ph:"(67) 90000-0000" },
+    { id:"email", curto:"E-mail", tipo:"texto", inputType:"email", label:"E-mail", obrig:true, ph:"nome@email.com" },
+    { id:"interesse", curto:"Cidade de interesse", tipo:"texto", label:"Cidade/UF de interesse para operar a unidade ALUCELL", obrig:true, ph:"Cidade / UF" },
+    { id:"vinculo", curto:"Reside/atua na cidade", tipo:"radio", label:"Você reside ou atua comercialmente nessa cidade?", opcoes:[
       "Sim, resido na cidade.", "Sim, atuo comercialmente na cidade.",
       "Sim, resido e atuo comercialmente na cidade.", "Não, mas tenho interesse estratégico na cidade."] }
   ]},
   { n: "02", titulo: "Perfil do candidato", perguntas: [
-    { id:"atuacao", tipo:"radio", label:"Você pretende atuar diretamente na operação da unidade?", opcoes:[
+    { id:"atuacao", curto:"Atuará na operação", tipo:"radio", label:"Você pretende atuar diretamente na operação da unidade?", opcoes:[
       "Sim, pretendo atuar diretamente.", "Sim, mas com apoio de equipe.",
       "Não, pretendo indicar um operador responsável.", "Ainda não defini."] },
-    { id:"empresa", tipo:"radio", label:"Você já possui empresa ou experiência empresarial?", opcoes:[
+    { id:"empresa", curto:"Experiência empresarial", tipo:"radio", label:"Você já possui empresa ou experiência empresarial?", opcoes:[
       "Sim, já possuo empresa ativa.", "Sim, já tive empresa anteriormente.",
       "Não possuo empresa, mas tenho experiência em gestão.", "Não possuo experiência empresarial relevante."] },
-    { id:"exp", tipo:"chips", label:"Qual sua principal experiência profissional?", cols:2, opcoes:[
+    { id:"exp", curto:"Experiência profissional", tipo:"chips", label:"Qual sua principal experiência profissional?", cols:2, opcoes:[
       "Comércio","Serviços","Vendas","Gestão de equipe","Atendimento ao público","Financeiro/cobrança","Tecnologia","Investimentos","Outro"] },
-    { id:"local", tipo:"radio", label:"Você possui relacionamento comercial ou presença local relevante na cidade de interesse?", cols:3, opcoes:["Sim","Não","Parcialmente"] },
-    { id:"localDesc", tipo:"area", label:"Se sim, explique brevemente.", ph:"Descreva brevemente" }
+    { id:"local", curto:"Presença local", tipo:"radio", label:"Você possui relacionamento comercial ou presença local relevante na cidade de interesse?", cols:3, opcoes:["Sim","Não","Parcialmente"] },
+    { id:"localDesc", curto:"Presença local (detalhe)", tipo:"area", label:"Se sim, explique brevemente.", ph:"Descreva brevemente" }
   ]},
   { n: "03", titulo: "Capacidade de investimento", perguntas: [
-    { id:"capital", tipo:"radio", label:"Qual faixa de capital você possui disponível para investimento inicial e operação?", opcoes:[
+    { id:"capital", curto:"Capital disponível", tipo:"radio", label:"Qual faixa de capital você possui disponível para investimento inicial e operação?", opcoes:[
       "Até R$ 50 mil","De R$ 50 mil a R$ 100 mil","De R$ 100 mil a R$ 200 mil","De R$ 200 mil a R$ 400 mil",
       "De R$ 400 mil a R$ 600 mil","De R$ 600 mil a R$ 800 mil","Acima de R$ 800 mil"] },
-    { id:"recursos", tipo:"radio", label:"Os recursos são próprios?", opcoes:[
+    { id:"recursos", curto:"Origem dos recursos", tipo:"radio", label:"Os recursos são próprios?", opcoes:[
       "Sim, 100% próprios.","Parcialmente próprios.","Pretendo ter sócio.",
       "Pretendo buscar crédito/financiamento.","Ainda estou avaliando."] },
-    { id:"capitalOp", tipo:"radio", cols:2, label:"Você compreende que a franquia exige capital operacional para compra de smartphones, formação de carteira e operação local?",
+    { id:"capitalOp", curto:"Compreende capital operacional", tipo:"radio", cols:2, label:"Você compreende que a franquia exige capital operacional para compra de smartphones, formação de carteira e operação local?",
       nota:"O capital operacional pode ser exigido e comprovado antes da aprovação e do início da operação.",
       opcoes:["Sim","Ainda preciso entender melhor"] }
   ]},
   { n: "04", titulo: "Cidade e modalidade", perguntas: [
-    { id:"porte", tipo:"radio", cols:2, label:"Qual o porte aproximado da cidade de interesse?", opcoes:[
+    { id:"porte", curto:"Porte da cidade", tipo:"radio", cols:2, label:"Qual o porte aproximado da cidade de interesse?", opcoes:[
       "4 mil a 6 mil habitantes","6 mil a 10 mil habitantes","10 mil a 20 mil habitantes","20 mil a 40 mil habitantes",
       "40 mil a 80 mil habitantes","80 mil a 160 mil habitantes","160 mil a 400 mil habitantes","Acima de 400 mil habitantes","Não sei informar"] },
-    { id:"ponto", tipo:"radio", label:"Você já possui ponto comercial ou local em vista?", opcoes:[
+    { id:"ponto", curto:"Ponto comercial", tipo:"radio", label:"Você já possui ponto comercial ou local em vista?", opcoes:[
       "Sim","Não","Ainda estou avaliando","Pretendo operar inicialmente com estrutura enxuta, se permitido"] },
-    { id:"cidadeInt", tipo:"texto", label:"Cidade de interesse:", obrig:true, ph:"Cidade / UF" },
-    { id:"cidadeAlt", tipo:"texto", label:"Há outra cidade de interesse?", opcional:true, ph:"Opcional" }
+    { id:"cidadeInt", curto:"Cidade de interesse (bloco 04)", tipo:"texto", label:"Cidade de interesse:", obrig:true, ph:"Cidade / UF" },
+    { id:"cidadeAlt", curto:"Cidade alternativa", tipo:"texto", label:"Há outra cidade de interesse?", opcional:true, ph:"Opcional" }
   ]},
   { n: "05", titulo: "Modelo de interesse", perguntas: [
-    { id:"modelo", tipo:"radio", cols:2, label:"Qual modelo você gostaria de conhecer melhor?",
+    { id:"modelo", curto:"Modelo de interesse", tipo:"radio", cols:2, label:"Qual modelo você gostaria de conhecer melhor?",
       nota:"O Programa Performance Assistida é opcional, envolve acompanhamento intensivo, auditoria homologada e possibilidade de recompra condicionada, quando cabível. Não constitui garantia automática de faturamento, lucro, rentabilidade, payback ou sucesso comercial.",
       opcoes:["Modelo ALUCELL Padrão","Modelo ALUCELL Performance Assistida","Quero entender os dois modelos","Ainda não sei"] }
   ]},
   { n: "06", titulo: "Motivação e aderência", perguntas: [
-    { id:"motivo", tipo:"area", label:"Por que você tem interesse em operar uma unidade ALUCELL?", ph:"Escreva livremente" },
-    { id:"risco", tipo:"radio", obrig:true, label:"Você entende que franquia é uma atividade empresarial com riscos e que não há garantia de lucro, faturamento, payback ou retorno de investimento?",
+    { id:"motivo", curto:"Motivação", tipo:"area", label:"Por que você tem interesse em operar uma unidade ALUCELL?", ph:"Escreva livremente" },
+    { id:"risco", curto:"Ciência de riscos", tipo:"radio", obrig:true, label:"Você entende que franquia é uma atividade empresarial com riscos e que não há garantia de lucro, faturamento, payback ou retorno de investimento?",
       opcoes:["Sim, estou ciente.","Quero entender melhor os riscos antes de avançar."] },
-    { id:"disponibilidade", tipo:"radio", cols:3, label:"Você tem disponibilidade para participar de reuniões, treinamentos e seguir os padrões operacionais da franqueadora?",
+    { id:"disponibilidade", curto:"Disponibilidade", tipo:"radio", cols:3, label:"Você tem disponibilidade para participar de reuniões, treinamentos e seguir os padrões operacionais da franqueadora?",
       opcoes:["Sim","Parcialmente","Ainda preciso avaliar"] }
   ]}
 ];
 
 const CONSENT = [
-  { id:"lgpd", titulo:"Consentimento LGPD",
+  { id:"lgpd", curto:"LGPD", titulo:"Consentimento LGPD",
     texto:"Autorizo a ALUCELL Franquias LTDA. a tratar meus dados pessoais para fins de análise de perfil, contato comercial, avaliação de candidatura, disponibilidade territorial, envio de informações institucionais e continuidade do processo seletivo de franqueados, nos termos da legislação aplicável de proteção de dados.",
     rotulo:"Li e autorizo o tratamento dos meus dados para as finalidades acima." },
-  { id:"preanalise", titulo:"Ciência sobre pré-análise",
+  { id:"preanalise", curto:"Pre-analise", titulo:"Ciência sobre pré-análise",
     texto:"Declaro estar ciente de que o preenchimento deste formulário não garante aprovação, reserva de território, envio automático da COF, concessão de franquia ou autorização para uso da marca ALUCELL.",
     rotulo:"Estou ciente." },
-  { id:"resultado", titulo:"Ciência sobre ausência de promessa de resultado",
+  { id:"resultado", curto:"Sem promessa de resultado", titulo:"Ciência sobre ausência de promessa de resultado",
     texto:"Declaro estar ciente de que a ALUCELL Franquias não promete faturamento, lucro, rentabilidade, payback, retorno de investimento, volume de contratos ou sucesso comercial.",
     rotulo:"Estou ciente." }
 ];
 
 class Component extends DCLogic {
-  state = { campos: {}, escolhas: {}, chips: {}, consent: {}, enviado: false, vw: typeof window !== "undefined" ? window.innerWidth : 440 };
+  state = { campos: {}, escolhas: {}, chips: {}, consent: {}, abriu: false, enviando: false, erro: false, vw: typeof window !== "undefined" ? window.innerWidth : 440 };
 
   componentDidMount() {
     this._onResize = () => this.setState({ vw: window.innerWidth });
@@ -274,7 +285,13 @@ class Component extends DCLogic {
       })
     }));
 
-    const todos = CONSENT.every(c => this.state.consent[c.id]);
+    const camposOk = BLOCOS.every(b => b.perguntas.every(q => {
+      if (!q.obrig) return true;
+      if (q.tipo === "texto" || q.tipo === "area") return !!(this.state.campos[q.id] || "").trim();
+      if (q.tipo === "chips") return Object.values(this.state.chips[q.id] || {}).some(Boolean);
+      return !!(this.state.escolhas[q.id]);
+    }));
+    const todos = camposOk && CONSENT.every(c => this.state.consent[c.id]);
     const consentimentos = CONSENT.map(c => {
       const on = !!this.state.consent[c.id];
       return {
@@ -291,8 +308,45 @@ class Component extends DCLogic {
       ...L,
       blocos,
       consentimentos,
-      enviar: () => { if (todos) this.setState({ enviado: true }); },
-      botaoTexto: this.state.enviado ? "Ficha enviada" : "Enviar ficha de qualificação",
+      enviar: () => {
+        if (!todos || this.state.enviando) return;
+        const linhas = ["FICHA DE QUALIFICAÇÃO — ALUCELL FRANQUIAS", "", "CONSENTIMENTOS"];
+        CONSENT.forEach(c => linhas.push(c.curto + ": " + (this.state.consent[c.id] ? "ACEITO" : "NAO")));
+        BLOCOS.forEach(b => {
+          linhas.push("", b.n + ") " + b.titulo.toUpperCase());
+          b.perguntas.forEach(q => {
+            let r = "";
+            if (q.tipo === "texto" || q.tipo === "area") r = this.state.campos[q.id] || "";
+            else if (q.tipo === "chips") r = Object.keys(this.state.chips[q.id] || {}).filter(k => this.state.chips[q.id][k]).join("; ");
+            else r = this.state.escolhas[q.id] || "";
+            linhas.push((q.curto || q.label) + ": " + (r || "-"));
+          });
+        });
+        const nome = this.state.campos.nome || "candidato";
+        const cidade = this.state.campos.interesse || this.state.campos.cidadeInt || "";
+        const assunto = "Ficha de qualificação — " + nome + (cidade ? " — " + cidade : "");
+        this.setState({ enviando: true, erro: false });
+        fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            access_key: "74de1962-de96-4b6e-bfb9-fd98a714f9ea",
+            subject: assunto,
+            from_name: nome,
+            email: this.state.campos.email || "",
+            message: linhas.join("\n")
+          })
+        })
+          .then(r => r.json())
+          .then(data => {
+            if (data.success) this.setState({ abriu: true, erro: false, enviando: false });
+            else this.setState({ enviando: false, erro: true });
+          })
+          .catch(() => this.setState({ enviando: false, erro: true }));
+      },
+      botaoTexto: this.state.enviando ? "Enviando..." : "Enviar ficha",
+      abriu: this.state.abriu,
+      erro: this.state.erro,
       botaoBg: todos ? "#FFD200" : "rgba(255,255,255,.07)",
       botaoFg: todos ? "#000" : "rgba(255,255,255,.35)",
       botaoSombra: todos ? "inset 0 1px 0 rgba(255,255,255,.35)" : "none"
