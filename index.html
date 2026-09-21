@@ -222,7 +222,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div style="padding:12px 14px; border-radius:10px; background:rgba(229,72,77,.1); border:1px solid rgba(229,72,77,.3); font-size:13px; color:#e5484d;">Ocorreu um erro. Tente novamente ou entre em contato pelo WhatsApp.</div>
           </sc-if>
 
-          <div onClick="{{ enviarContato }}" style="display:flex; align-items:center; justify-content:center; width:100%; max-width:{{ ctaMax }}; padding:19px 22px; border-radius:16px; font-family:'Nexa','Outfit',sans-serif; font-weight:700; font-size:15.5px; letter-spacing:-0.01em; cursor:pointer; transition:background .15s; background:{{ contatoOk ? '#FFD200' : 'rgba(255,255,255,.07)' }}; color:{{ contatoOk ? '#000' : 'rgba(255,255,255,.3)' }}; box-shadow:{{ contatoOk ? 'inset 0 1px 0 rgba(255,255,255,.35)' : 'none' }};">{{ enviandoC ? "Enviando…" : "Solicitar apresentação" }}</div>
+          <div onClick="{{ enviarContato }}" style="display:flex; align-items:center; justify-content:center; width:100%; max-width:{{ ctaMax }}; padding:19px 22px; border-radius:16px; font-family:'Nexa','Outfit',sans-serif; font-weight:700; font-size:15.5px; letter-spacing:-0.01em; cursor:pointer; transition:background .15s; background:{{ botaoContatoBg }}; color:{{ botaoContatoFg }}; box-shadow:{{ botaoContatoSombra }};">{{ botaoContatoTexto }}</div>
 
         </div>
       </sc-if>
@@ -490,6 +490,10 @@ class Component extends DCLogic {
       erroC: this.state.erroC,
       enviandoC: this.state.enviandoC,
       contatoOk: !!(this.state.nomeC.trim() && this.state.wppC.trim() && this.state.cidadeC.trim() && this.state.faixaC && this.state.cienciaC),
+      botaoContatoBg: !!(this.state.nomeC.trim() && this.state.wppC.trim() && this.state.cidadeC.trim() && this.state.faixaC && this.state.cienciaC) ? "#FFD200" : "rgba(255,255,255,.07)",
+      botaoContatoFg: !!(this.state.nomeC.trim() && this.state.wppC.trim() && this.state.cidadeC.trim() && this.state.faixaC && this.state.cienciaC) ? "#000" : "rgba(255,255,255,.3)",
+      botaoContatoSombra: !!(this.state.nomeC.trim() && this.state.wppC.trim() && this.state.cidadeC.trim() && this.state.faixaC && this.state.cienciaC) ? "inset 0 1px 0 rgba(255,255,255,.35)" : "none",
+      botaoContatoTexto: this.state.enviandoC ? "Enviando…" : "Solicitar apresentação",
       enviarContato: async () => {
         const { nomeC, wppC, cidadeC, faixaC, cienciaC, enviandoC } = this.state;
         if (!nomeC.trim() || !wppC.trim() || !cidadeC.trim() || !faixaC || !cienciaC || enviandoC) return;
