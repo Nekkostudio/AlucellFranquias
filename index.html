@@ -165,7 +165,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <h2 style="font-family:'Nexa','Outfit',sans-serif; font-weight:700; font-size:{{ h2Size }}; line-height:1.1; letter-spacing:-0.025em; margin:0 0 8px;">Conheça a ALUCELL por dentro</h2>
       <p style="margin:0 0 24px; font-size:14px; line-height:1.6; color:rgba(255,255,255,.55); max-width:{{ colMax }};">Veja a loja, o atendimento e as etapas de avaliação e formalização dos contratos.</p>
 
-      <div style="display:grid; grid-template-columns:{{ provasCols }}; gap:{{ cardGap }}; margin-bottom:32px;">
+      <div style="display:grid; grid-template-columns:{{ fotosCols }}; gap:{{ cardGap }}; margin-bottom:32px;">
         <div style="border-radius:16px; overflow:hidden; position:relative;">
           <img src="uploads/foto-loja-fachada.webp" alt="Fachada da loja ALUCELL" style="width:100%; height:220px; object-fit:cover; display:block;">
           <div style="position:absolute; bottom:0; left:0; right:0; padding:12px 14px; background:linear-gradient(0deg,rgba(0,0,0,.7),transparent); font-size:12px; font-weight:600; color:rgba(255,255,255,.85);">Fachada — Campo Grande/MS</div>
@@ -447,7 +447,8 @@ class Component extends DCLogic {
       isMobile: !lg,
       videoRefM: this.videoRefM,
       fichaCols: lg ? "1fr 1fr" : "1fr",
-      fichaGap: lg ? "48px" : "0px"
+      fichaGap: lg ? "48px" : "0px",
+      fotosCols: lg ? "repeat(3, 1fr)" : (md ? "repeat(3, 1fr)" : "1fr")
     };
   }
 
