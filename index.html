@@ -499,9 +499,8 @@ class Component extends DCLogic {
         if (!nomeC.trim() || !wppC.trim() || !cidadeC.trim() || !faixaC || !cienciaC || enviandoC) return;
         this.setState({ enviandoC: true, erroC: false });
         try {
-          const r = await fetch("https://script.google.com/macros/s/AKfycbyH3jj7DJBnfCe5wSGxmrmHhMHGC0WDR5isJpJIJBohx2wk-L8KO6JXXjwImbFF1gLZ/exec", {
+          const r = await fetch("https://script.google.com/macros/s/AKfycbwmEtDebhB8n4iKHdS7kC4QK5v7WhKFXGEywyR7hgRq4nGVci-fQ6PKc7pEkgxfFUdV/exec", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ nome: nomeC, whatsapp: wppC, cidade: cidadeC, faixa_capital: faixaC })
           });
           const d = await r.json();
