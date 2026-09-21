@@ -195,9 +195,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
 
           <div>
-            <label style="display:block; font-size:11px; font-weight:600; letter-spacing:.07em; text-transform:uppercase; color:rgba(255,255,255,.5); margin-bottom:7px;">WhatsApp com DDD</label>
-            <input type="tel" value="{{ wppC }}" onChange="{{ onWppC }}" placeholder="(67) 9 9999-9999" style="width:100%; padding:15px 16px; border-radius:12px; border:1px solid rgba(255,255,255,.14); background:rgba(0,0,0,.5); color:#fff; font-size:15px; outline:none;" style-focus="border-color:rgba(255,210,0,.6)">
+            <label style="display:block; font-size:11px; font-weight:600; letter-spacing:.07em; text-transform:uppercase; color:rgba(255,255,255,.5); margin-bottom:7px;">WhatsApp</label>
+            <div style="display:flex; gap:8px;">
+              <select value="{{ dddC }}" onChange="{{ onDddC }}" style="width:110px; flex:none; padding:15px 10px; border-radius:12px; border:1px solid rgba(255,255,255,.14); background:rgba(0,0,0,.5); color:#fff; font-size:15px; outline:none; appearance:none; text-align:center;" style-focus="border-color:rgba(255,210,0,.6)">
+                <sc-for list="{{ ddds }}" as="d" hint-placeholder-count="1">
+                  <option value="{{ d.v }}" style="background:#111;">{{ d.l }}</option>
+                </sc-for>
+              </select>
+              <input type="tel" value="{{ wppC }}" onChange="{{ onWppC }}" onFocus="{{ onFormTouch }}" placeholder="9 9999-9999" style="flex:1; padding:15px 16px; border-radius:12px; border:1px solid rgba(255,255,255,.14); background:rgba(0,0,0,.5); color:#fff; font-size:15px; outline:none;" style-focus="border-color:rgba(255,210,0,.6)">
+            </div>
           </div>
+          <input type="text" value="{{ honeypotC }}" onChange="{{ onHoneypotC }}" style="position:absolute; left:-9999px; opacity:0; pointer-events:none;" tabIndex="-1" autoComplete="off">
 
           <div>
             <label style="display:block; font-size:11px; font-weight:600; letter-spacing:.07em; text-transform:uppercase; color:rgba(255,255,255,.5); margin-bottom:7px;">Cidade / UF de interesse</label>
@@ -274,7 +282,7 @@ const STATUS = {
 const norm = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
 class Component extends DCLogic {
-  state = { query: "", cidadeSel: "", faixa: "", ciencia: false, enviado: false, geo: null, vw: typeof window !== "undefined" ? window.innerWidth : 440, nomeC: "", wppC: "", cidadeC: "", faixaC: "", cienciaC: false, enviadoC: false, enviandoC: false, erroC: false };
+  state = { query: "", cidadeSel: "", faixa: "", ciencia: false, enviado: false, geo: null, vw: typeof window !== "undefined" ? window.innerWidth : 440, nomeC: "", dddC: "", wppC: "", cidadeC: "", faixaC: "", cienciaC: false, enviadoC: false, enviandoC: false, erroC: false, honeypotC: "", formTouchC: null };
 
   videoRef = React.createRef();
   videoRefM = React.createRef();
@@ -475,8 +483,12 @@ class Component extends DCLogic {
       botaoSombra: ok ? "inset 0 1px 0 rgba(255,255,255,.35)" : "none",
 
       // contato form
-      nomeC: this.state.nomeC, onNomeC: e => this.setState({ nomeC: e.target.value }),
+      nomeC: this.state.nomeC, onNomeC: e => this.setState({ nomeC: e.target.value, formTouchC: this.state.formTouchC || Date.now() }),
+      dddC: this.state.dddC, onDddC: e => this.setState({ dddC: e.target.value }),
+      ddds: [{ v: "", l: "DDD" }, ...[11,12,13,14,15,16,17,18,19,21,22,24,27,28,31,32,33,34,35,37,38,41,42,43,44,45,46,47,48,49,51,53,54,55,61,62,63,64,65,66,67,68,69,71,73,74,75,77,79,81,82,83,84,85,86,87,88,89,91,92,93,94,95,96,97,98,99].map(n => ({ v: String(n), l: "("+n+")" }))],
       wppC: this.state.wppC, onWppC: e => this.setState({ wppC: e.target.value }),
+      onFormTouch: () => { if (!this.state.formTouchC) this.setState({ formTouchC: Date.now() }); },
+      honeypotC: this.state.honeypotC, onHoneypotC: e => this.setState({ honeypotC: e.target.value }),
       cidadeC: this.state.cidadeC, onCidadeC: e => this.setState({ cidadeC: e.target.value }),
       faixasDef: ["Até R$ 80 mil", "R$ 80 a 150 mil", "R$ 150 a 250 mil", "Acima de R$ 250 mil", "Ainda estou avaliando"].map(label => {
         const on = this.state.faixaC === label;
@@ -489,19 +501,21 @@ class Component extends DCLogic {
       enviadoC: this.state.enviadoC,
       erroC: this.state.erroC,
       enviandoC: this.state.enviandoC,
-      contatoOk: !!(this.state.nomeC.trim() && this.state.wppC.trim() && this.state.cidadeC.trim() && this.state.faixaC && this.state.cienciaC),
-      botaoContatoBg: !!(this.state.nomeC.trim() && this.state.wppC.trim() && this.state.cidadeC.trim() && this.state.faixaC && this.state.cienciaC) ? "#FFD200" : "rgba(255,255,255,.07)",
-      botaoContatoFg: !!(this.state.nomeC.trim() && this.state.wppC.trim() && this.state.cidadeC.trim() && this.state.faixaC && this.state.cienciaC) ? "#000" : "rgba(255,255,255,.3)",
-      botaoContatoSombra: !!(this.state.nomeC.trim() && this.state.wppC.trim() && this.state.cidadeC.trim() && this.state.faixaC && this.state.cienciaC) ? "inset 0 1px 0 rgba(255,255,255,.35)" : "none",
+      contatoOk: !!(this.state.nomeC.trim() && this.state.dddC && this.state.wppC.trim() && this.state.cidadeC.trim() && this.state.faixaC && this.state.cienciaC),
+      botaoContatoBg: !!(this.state.nomeC.trim() && this.state.dddC && this.state.wppC.trim() && this.state.cidadeC.trim() && this.state.faixaC && this.state.cienciaC) ? "#FFD200" : "rgba(255,255,255,.07)",
+      botaoContatoFg: !!(this.state.nomeC.trim() && this.state.dddC && this.state.wppC.trim() && this.state.cidadeC.trim() && this.state.faixaC && this.state.cienciaC) ? "#000" : "rgba(255,255,255,.3)",
+      botaoContatoSombra: !!(this.state.nomeC.trim() && this.state.dddC && this.state.wppC.trim() && this.state.cidadeC.trim() && this.state.faixaC && this.state.cienciaC) ? "inset 0 1px 0 rgba(255,255,255,.35)" : "none",
       botaoContatoTexto: this.state.enviandoC ? "Enviando…" : "Solicitar apresentação",
       enviarContato: async () => {
-        const { nomeC, wppC, cidadeC, faixaC, cienciaC, enviandoC } = this.state;
-        if (!nomeC.trim() || !wppC.trim() || !cidadeC.trim() || !faixaC || !cienciaC || enviandoC) return;
+        const { nomeC, dddC, wppC, cidadeC, faixaC, cienciaC, enviandoC, honeypotC, formTouchC } = this.state;
+        if (!nomeC.trim() || !dddC || !wppC.trim() || !cidadeC.trim() || !faixaC || !cienciaC || enviandoC) return;
+        if (honeypotC) return;
+        if (!formTouchC || (Date.now() - formTouchC) < 4000) return;
         this.setState({ enviandoC: true, erroC: false });
         try {
           const r = await fetch("https://script.google.com/macros/s/AKfycbwmEtDebhB8n4iKHdS7kC4QK5v7WhKFXGEywyR7hgRq4nGVci-fQ6PKc7pEkgxfFUdV/exec", {
             method: "POST",
-            body: JSON.stringify({ nome: nomeC, whatsapp: wppC, cidade: cidadeC, faixa_capital: faixaC })
+            body: JSON.stringify({ nome: nomeC, whatsapp: "("+dddC+") "+wppC, cidade: cidadeC, faixa_capital: faixaC })
           });
           const d = await r.json();
           if (d.success) { window.location.href = "/obrigado.html"; }
