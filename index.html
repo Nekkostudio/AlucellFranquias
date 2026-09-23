@@ -304,7 +304,7 @@ const MUNICIPIOS = [
   ["Taquarussu","d"],["Terenos","d"],["Três Lagoas","o"],["Vicentina","d"]
 ];
 const DISPONIVEIS = ["Alcinópolis","Novo Horizonte do Sul","Corguinho","Rio Negro","Caracol","Rochedo","Douradina","Paraíso das Águas","Vicentina","Pedro Gomes","Laguna Carapã","Juti","Santa Rita do Pardo","Jaraguari","Anaurilândia","Bandeirantes","Japorã","Selvíria","Inocência","Bodoquena","Antônio João"];
-MUNICIPIOS.forEach(m => { m[1] = DISPONIVEIS.indexOf(m[0]) >= 0 ? "d" : "e"; });
+MUNICIPIOS.forEach(m => { m[1] = "d"; });
 const STATUS = {
   d: { label:"Disponível", fg:"#FFD200", bg:"rgba(255,210,0,.12)", bd:"rgba(255,210,0,.35)" },
   e: { label:"Lista de espera", fg:"#ffffff", bg:"rgba(255,255,255,.09)", bd:"rgba(255,255,255,.22)" },
