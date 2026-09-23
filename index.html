@@ -129,7 +129,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </section>
     </div>
 
-    <section style="padding:{{ secPad }};">
+    <section style="padding:{{ secPad }}; padding-top:{{ lg ? '70px' : '64px' }};">
       <h2 style="font-family:'Nexa','Outfit',sans-serif; font-weight:700; font-size:{{ h2Size }}; line-height:1.1; letter-spacing:-0.025em; margin:0 0 24px;">Prova, não promessa.</h2>
       <div style="display:grid; grid-template-columns:{{ provasCols }}; gap:{{ cardGap }};">
         <sc-for list="{{ provas }}" as="p" hint-placeholder-count="4">
@@ -160,7 +160,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         .etapa-item:nth-child(4) { animation-delay:.44s; }
       </style>
       <div style="position:relative; display:flex; flex-direction:column; gap:4px; max-width:{{ colMax }};">
-        <div style="position:absolute; left:19px; top:32px; bottom:32px; width:1px; background:linear-gradient(180deg, rgba(255,210,0,.6), rgba(255,210,0,.12));"></div>
+        <div style="position:absolute; left:19px; top:32px; height:calc(100% - 64px); width:1px; background:linear-gradient(180deg, rgba(255,210,0,.6), rgba(255,210,0,.12));"></div>
         <sc-for list="{{ etapas }}" as="e" hint-placeholder-count="3">
           <div class="etapa-item" style="display:flex; gap:16px; align-items:flex-start; padding:12px 0; position:relative;">
             <div style="flex:none; width:39px; height:39px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:#0b0b0b; border:1px solid rgba(255,210,0,.4); font-family:'Nexa','Outfit',sans-serif; font-weight:700; font-size:13px; color:#FFD200;">{{ e.n }}</div>
@@ -293,12 +293,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div style="display:flex; flex-direction:column; gap:14px;">
 
           <div>
-            <label style="display:block; font-size:11px; font-weight:600; letter-spacing:.07em; text-transform:uppercase; color:rgba(255,255,255,.5); margin-bottom:7px;">Nome</label>
+            <label style="display:block; font-size:11px; font-weight:600; letter-spacing:.07em; text-transform:uppercase; color:#fff; margin-bottom:7px;">Nome</label>
             <input type="text" value="{{ nomeC }}" onChange="{{ onNomeC }}" placeholder="Seu nome completo" style="width:100%; padding:15px 16px; border-radius:12px; border:1px solid rgba(255,255,255,.14); background:rgba(0,0,0,.5); color:#fff; font-size:15px; outline:none;" style-focus="border-color:rgba(255,210,0,.6)">
           </div>
 
           <div>
-            <label style="display:block; font-size:11px; font-weight:600; letter-spacing:.07em; text-transform:uppercase; color:rgba(255,255,255,.5); margin-bottom:7px;">WhatsApp</label>
+            <label style="display:block; font-size:11px; font-weight:600; letter-spacing:.07em; text-transform:uppercase; color:#fff; margin-bottom:7px;">WhatsApp</label>
             <div style="display:flex; gap:8px;">
               <select value="{{ dddC }}" onChange="{{ onDddC }}" style="width:110px; flex:none; padding:15px 10px; border-radius:12px; border:1px solid rgba(255,255,255,.14); background:rgba(0,0,0,.5); color:#fff; font-size:15px; outline:none; appearance:none; text-align:center;" style-focus="border-color:rgba(255,210,0,.6)">
                 <sc-for list="{{ ddds }}" as="d" hint-placeholder-count="1">
@@ -311,12 +311,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <input type="text" value="{{ honeypotC }}" onChange="{{ onHoneypotC }}" style="position:absolute; left:-9999px; opacity:0; pointer-events:none;" tabIndex="-1" autoComplete="off">
 
           <div>
-            <label style="display:block; font-size:11px; font-weight:600; letter-spacing:.07em; text-transform:uppercase; color:rgba(255,255,255,.5); margin-bottom:7px;">Cidade / UF de interesse</label>
+            <label style="display:block; font-size:11px; font-weight:600; letter-spacing:.07em; text-transform:uppercase; color:#fff; margin-bottom:7px;">Cidade / UF de interesse</label>
             <input type="text" value="{{ cidadeC }}" onChange="{{ onCidadeC }}" placeholder="Ex.: Dourados/MS" style="width:100%; padding:15px 16px; border-radius:12px; border:1px solid rgba(255,255,255,.14); background:rgba(0,0,0,.5); color:#fff; font-size:15px; outline:none;" style-focus="border-color:rgba(255,210,0,.6)">
           </div>
 
           <div>
-            <label style="display:block; font-size:11px; font-weight:600; letter-spacing:.07em; text-transform:uppercase; color:rgba(255,255,255,.5); margin-bottom:10px;">Faixa de capital disponível</label>
+            <label style="display:block; font-size:11px; font-weight:600; letter-spacing:.07em; text-transform:uppercase; color:#fff; margin-bottom:10px;">Faixa de capital disponível</label>
             <div style="display:flex; flex-wrap:wrap; gap:8px;">
               <sc-for list="{{ faixasDef }}" as="fx" hint-placeholder-count="5">
                 <div onClick="{{ fx.onPick }}" style="padding:10px 14px; border-radius:10px; font-size:13px; font-weight:600; cursor:pointer; background:{{ fx.bg }}; color:{{ fx.fg }}; border:1px solid {{ fx.bd }};">{{ fx.label }}</div>
@@ -489,7 +489,7 @@ class Component extends DCLogic {
       cidadePad: lg ? "26px 0 10px" : "26px 22px 10px",
       h2Size: lg ? "40px" : (md ? "34px" : "30px"),
       secPad: lg ? "70px 40px 10px" : (md ? "56px 32px 10px" : "46px 22px 10px"),
-      provasCols: lg ? "repeat(4, 1fr)" : (md ? "repeat(2, 1fr)" : "1fr 1fr"),
+      provasCols: lg ? "repeat(4, 1fr)" : (md ? "repeat(2, 1fr)" : "repeat(2, 1fr)"),
       cardGap: lg ? "16px" : "12px",
       provaTexto: lg ? "12px" : "12.5px",
       colMax: lg ? "760px" : "100%",
@@ -509,7 +509,7 @@ class Component extends DCLogic {
       videoRefM: this.videoRefM,
       fichaCols: lg ? "1fr 1fr" : "1fr",
       fichaGap: lg ? "48px" : "0px",
-      fotosCols: "repeat(3, 1fr)",
+      fotosCols: lg ? "repeat(3, 1fr)" : (md ? "repeat(3, 1fr)" : "1fr"),
       fotosH: lg ? "280px" : "200px"
     };
   }
