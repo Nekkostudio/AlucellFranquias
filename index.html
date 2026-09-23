@@ -326,7 +326,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
           <div style="display:flex; align-items:flex-start; gap:12px; margin-top:4px;" onClick="{{ toggleCienciaC }}">
             <div style="flex:none; width:20px; height:20px; border-radius:6px; border:1.5px solid {{ cienciaCBorda }}; background:{{ cienciaCBg }}; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:13px; font-weight:700; color:#000; margin-top:1px;">{{ cienciaCMarca }}</div>
-            <div style="font-size:12.5px; line-height:1.55; color:rgba(255,255,255,.55); cursor:pointer;">Li e concordo com a <a href="https://alucellfranquias.com.br/politica-de-privacidade" target="_blank" rel="noopener" style="color:#FFD200;">política de privacidade</a>. Autorizo o contato via WhatsApp.</div>
+            <div style="font-size:12.5px; line-height:1.55; color:#fff; cursor:pointer;">Li e concordo com a <a href="https://alucellfranquias.com.br/politica-de-privacidade" target="_blank" rel="noopener" style="color:#FFD200;">política de privacidade</a>. Autorizo o contato via WhatsApp.</div>
           </div>
 
           <sc-if value="{{ erroC }}" hint-placeholder-val="{{ false }}">
@@ -600,7 +600,7 @@ class Component extends DCLogic {
       toggleCienciaC: () => this.setState({ cienciaC: !this.state.cienciaC }),
       cienciaCMarca: this.state.cienciaC ? "✓" : "",
       cienciaCBg: this.state.cienciaC ? "#FFD200" : "transparent",
-      cienciaCBorda: this.state.cienciaC ? "rgba(255,210,0,.6)" : "rgba(255,255,255,.16)",
+      cienciaCBorda: this.state.cienciaC ? "rgba(255,210,0,.6)" : "rgba(255,255,255,.5)",
       enviadoC: this.state.enviadoC,
       erroC: this.state.erroC,
       enviandoC: this.state.enviandoC,
